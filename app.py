@@ -45,3 +45,31 @@ def sigmoid(x):
 def softmax(x):
     scoreMatExp = np.exp(np.asarray(x))
     return scoreMatExp / scoreMatExp.sum(0)
+
+draw = ImageDraw.Draw(img)
+for cy in range(0,13):
+    for cx in range(0,13):
+        for b in range(0,5):
+            channel = b*(numClasses+5)
+            tx = out[channel  ][cy][cx]
+            ty = out[channel+1][cy][cx]
+            tw = out[channel+2][cy][cx]
+            th = out[channel+3][cy][cx]
+            tc = out[channel+4][cy][cx]
+            x = (float(cx) + sigmoid(tx))*32
+            y = (float(cy) + sigmoid(ty))*32
+
+            w = np.exp(tw) * 32 * ANCHORS[2*b  ]
+            h = np.exp(th) * 32 * ANCHORS[2*b+1] 
+
+            confidence = sigmoid(tc)
+
+            classes = np.zeros(numClasses)
+            for c in range(0,numClasses):
+                classes[c] = out[channel + 5 +c][cy][cx]
+
+            classes = softmax(classes)
+            detectedClass = classes.argmax()
+
+            if 0.6 < classes[detectedClass] * confidence and confidence > 0.4:
+                print(classes[detectedClass] * confidence, label[detectedClass], confidence, classes[detectedClass])
