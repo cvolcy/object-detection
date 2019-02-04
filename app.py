@@ -4,6 +4,7 @@ import colorsys
 from PIL import Image,ImageDraw
 
 IMG_PATH = 'tests/test1.jpg'
+ANCHORS = [1.08, 1.19, 3.42, 4.41, 6.63, 11.38, 9.42, 5.11, 16.62, 10.52]
 
 numClasses = 20 # Number of classes | Based on YOLO model
 
@@ -38,4 +39,9 @@ print(f"Test image shape{X.shape}")
 
 out = sess.run(None, {input_name: X.astype(np.float32)})
 out = out[0][0]
-print(out)
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+def softmax(x):
+    scoreMatExp = np.exp(np.asarray(x))
+    return scoreMatExp / scoreMatExp.sum(0)
