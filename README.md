@@ -6,7 +6,7 @@ A simple script doing inference with the tiny YOLOv2 model from the Onnx model z
 
 Input
 
-![test1](tests/test1.jpg)
+![test1](images/test1.jpg)
 
 Output
 
