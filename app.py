@@ -73,4 +73,5 @@ for cy in range(0,13):
             detectedClass = classes.argmax()
 
             if 0.6 < classes[detectedClass] * confidence and confidence > 0.4:
+                found = found + 1
                 print(classes[detectedClass] * confidence, label[detectedClass]+str(found), confidence, classes[detectedClass])
