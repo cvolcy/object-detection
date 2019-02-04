@@ -29,8 +29,11 @@ original_size = img.size
 YOLO_SIZE = (416, 416)
 print(f"Resizing image from {original_size} to {YOLO_SIZE}")
 ow, oh = img.size
+
+# The original image sizes ratios
 rw = ow/YOLO_SIZE[0]
 rh = oh/YOLO_SIZE[1]
+
 X = np.asarray(img.resize(YOLO_SIZE))
 X = X.transpose(2,0,1)
 X = X.reshape(1,3,YOLO_SIZE[0],YOLO_SIZE[1])
@@ -75,3 +78,14 @@ for cy in range(0,13):
             if 0.6 < classes[detectedClass] * confidence and confidence > 0.4:
                 found = found + 1
                 print(classes[detectedClass] * confidence, label[detectedClass]+str(found), confidence, classes[detectedClass])
+                color = classColor[detectedClass]
+                x = (x - w/2)*rw
+                w = w * rw
+                y = (y - h/2)*rh
+                h = h * rh
+                draw.line((x  ,y  ,x+w ,y ) , fill=color)
+                draw.line((x  ,y  ,x   ,y+h), fill=color)
+                draw.line((x+w,y  ,x+w ,y+h), fill=color)
+                draw.line((x  ,y+h,x+w ,y+h), fill=color)
+
+img.save("result.png")
