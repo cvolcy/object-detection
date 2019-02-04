@@ -47,6 +47,7 @@ def softmax(x):
     return scoreMatExp / scoreMatExp.sum(0)
 
 draw = ImageDraw.Draw(img)
+found = 0
 for cy in range(0,13):
     for cx in range(0,13):
         for b in range(0,5):
@@ -72,4 +73,4 @@ for cy in range(0,13):
             detectedClass = classes.argmax()
 
             if 0.6 < classes[detectedClass] * confidence and confidence > 0.4:
-                print(classes[detectedClass] * confidence, label[detectedClass], confidence, classes[detectedClass])
+                print(classes[detectedClass] * confidence, label[detectedClass]+str(found), confidence, classes[detectedClass])
