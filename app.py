@@ -87,5 +87,6 @@ for cy in range(0,13):
                 draw.line((x  ,y  ,x   ,y+h), fill=color)
                 draw.line((x+w,y  ,x+w ,y+h), fill=color)
                 draw.line((x  ,y+h,x+w ,y+h), fill=color)
+                draw.text((x+5  ,y+5), f"{label[detectedClass]}:{found} {classes[detectedClass] * confidence * 100:.1f}%", fill=color)
 
 img.save("result.png")
